@@ -11,17 +11,17 @@ async function loadPhotos(categoryName) {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const data = await response.json();
+        const photos = await response.json();
 
-        console.log('Loaded data:', data); // Debugging line
+        console.log('Loaded data:', photos); // Debugging line
 
-        if (Array.isArray(data.photos)) {
+        if (Array.isArray(photos)) {
             const photoGrid = document.querySelector('.photo-grid');
 
             // Clear previous photos
             photoGrid.innerHTML = '';
 
-            data.photos.forEach(photo => {
+            photos.forEach(photo => {
                 const photoElement = document.createElement('div');
                 photoElement.classList.add(photo.is_portrait ? 'portrait' : 'landscape');
 
@@ -36,7 +36,7 @@ async function loadPhotos(categoryName) {
                 photoGrid.appendChild(photoElement);
             });
         } else {
-            console.error('Expected data.photos to be an array, but got:', data.photos);
+            console.error('Expected data.photos to be an array, but got:', photos);
         }
     } catch (error) {
         console.error('Error loading photos:', error);
