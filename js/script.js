@@ -1,7 +1,7 @@
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
     // Load photos for the default category or you can specify categories as needed
-    loadPhotos('default'); // Change 'default' to the actual category name if needed
+    // loadPhotos('default'); // Change 'default' to the actual category name if needed
     updateCategoryTiles();
 });
 
