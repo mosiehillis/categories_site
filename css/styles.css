@@ -82,14 +82,20 @@ main {
     background-image: url('photos/Portraits/sample.jpg');
 }
 
-.photo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+.photo-grid img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 5px;
+    transition: opacity 0.3s ease;
 }
 
-.photo-grid img {
-    width: 100%;
-    height: auto;
-    display: block;
+.photo-grid img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-grid img:not([loading="lazy"]) {
+    opacity: 1;
 }

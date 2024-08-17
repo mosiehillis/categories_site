@@ -6,7 +6,10 @@ function loadPhotos(category) {
             photos.sort((a, b) => new Date(b.date) - new Date(a.date));  // Sort photos newest to oldest
             photos.forEach(photo => {
                 const img = document.createElement('img');
-                img.src = `photos/${category}/${photo.file}`;
+                img.src = `photos/${category}/thumbnails/${photo.file}`;
+                img.dataset.fullImage = `photos/${category}/${photo.file}`;
+                img.loading = "lazy";
+                img.onclick = () => img.src = img.dataset.fullImage;  // Load full image on click
                 photoGrid.appendChild(img);
             });
         })
