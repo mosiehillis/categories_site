@@ -1,16 +1,31 @@
-function loadPhotos(category) {
-    const photoGrid = document.getElementById('photo-grid');
-    fetch(`js/${category.toLowerCase()}_photos.json`)
-        .then(response => response.json())
-        .then(photos => {
-            photos.sort((a, b) => new Date(b.date) - new Date(a.date));  // Sort photos newest to oldest
-            photos.forEach(photo => {
-                const img = document.createElement('img');
-                img.src = `photos/${category}/${photo.file}`;
-                photoGrid.appendChild(img);
-            });
-        })
-        .catch(error => console.error('Error loading photos:', error));
+// script.js
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPhotos();
+});
+
+async function fetchPhotos() {
+    try {
+        const response = await fetch('/photo-metadata.json');
+        const data = await response.json();
+        const photoGrid = document.querySelector('.photo-grid');
+
+        data.photos.forEach(photo => {
+            const photoElement = document.createElement('div');
+            photoElement.classList.add(photo.is_portrait ? 'portrait' : 'landscape');
+
+            const img = document.createElement('img');
+            img.src = photo.thumbnailUrl; // Use the URL of the thumbnail image
+            img.alt = photo.title; // Optional: Add alt text for accessibility
+
+            // Add lazy loading attribute
+            img.setAttribute('loading', 'lazy');
+
+            photoElement.appendChild(img);
+            photoGrid.appendChild(photoElement);
+        });
+    } catch (error) {
+        console.error('Error fetching photos:', error);
+    }
 }
 
 function setTileBackground(category) {

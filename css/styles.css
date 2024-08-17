@@ -67,11 +67,14 @@ header a:hover, footer a:hover {
     box-sizing: border-box; /* Ensure padding and borders are included in the element’s total width and height */
 }
 
-.photo-grid img {
-    width: 100%; /* Full width of the grid cell */
-    height: 200px; /* Set a fixed height for uniform rows */
-    object-fit: cover; /* Ensure the image covers the cell while maintaining aspect ratio */
-    display: block; /* Remove any default inline spacing */
-    border: 0; /* No border around images */
-    box-sizing: border-box; /* Ensure padding and borders are included in the element’s total width and height */
+/* Portrait Images */
+.photo-grid .portrait img {
+    height: 300px; /* Height for portrait images */
+    object-fit: cover; /* Cover the grid cell while maintaining aspect ratio */
+}
+
+/* Landscape Images */
+.photo-grid .landscape img {
+    height: 150px; /* Height for landscape images */
+    object-fit: cover; /* Cover the grid cell while maintaining aspect ratio */
 }
