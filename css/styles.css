@@ -7,22 +7,51 @@ body {
     padding: 0;
 }
 
-/* Header and Footer */
-header, footer {
-    background-color: #f5d4e0; /* Pastel pink for header and footer */
+/* Header */
+header {
+    background-color: #f5d4e0; /* Pastel pink for header */
     color: #333; /* Ensure text is readable */
     padding: 10px 20px;
     text-align: center;
 }
 
-header a, footer a {
+header a {
     color: #000; /* Black color for links */
     text-decoration: none;
 }
 
-header a:hover, footer a:hover {
+header a:hover {
     text-decoration: underline;
 }
+
+/* Footer */
+footer {
+    background-color: #f5d4e0; /* Pastel pink for footer */
+    color: #333; /* Ensure text is readable */
+    padding: 10px 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between icons */
+}
+
+.footer-icon {
+    display: inline-block;
+    width: 40px; /* Size of the icons */
+    height: 40px;
+}
+
+.footer-icon img {
+    width: 100%; /* Scale icon to fit container */
+    height: auto;
+    vertical-align: middle; /* Aligns icon properly with text */
+    border: 0; /* Remove any border */
+}
+
+.footer-icon:hover img {
+    opacity: 0.8; /* Slightly dim the icon on hover */
+}
+
 
 /* Category Tiles */
 .category-grid {
