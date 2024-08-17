@@ -37,13 +37,15 @@ footer {
 
 .footer-icon {
     display: inline-block;
-    width: 40px; /* Size of the icons */
-    height: 40px;
+    width: 40px; /* Set consistent width */
+    height: 40px; /* Set consistent height */
+    overflow: hidden; /* Ensure any extra part of the icon is hidden */
 }
 
 .footer-icon img {
     width: 100%; /* Scale icon to fit container */
-    height: auto;
+    height: 100%; /* Scale icon to fit container */
+    object-fit: contain; /* Ensure the icon is properly contained within the container */
     vertical-align: middle; /* Aligns icon properly with text */
     border: 0; /* Remove any border */
 }
