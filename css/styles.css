@@ -70,18 +70,6 @@ main {
     z-index: 1;
 }
 
-#concerts-tile {
-    background-image: url('photos/Concerts/sample.jpg');
-}
-
-#weddings-tile {
-    background-image: url('photos/Weddings/sample.jpg');
-}
-
-#portraits-tile {
-    background-image: url('photos/Portraits/sample.jpg');
-}
-
 .photo-grid img {
     width: auto;
     height: auto;
