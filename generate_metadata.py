@@ -36,7 +36,7 @@ def generate_photo_metadata(category):
                 'portrait': is_portrait(filepath)
             })
 
-    output_file = os.path.join('js', f'{category.lower()}_photos.json')
+    output_file = os.path.join('js', f'{category}.json')
     with open(output_file, 'w') as json_file:
         json.dump(photos, json_file, indent=4)
 
@@ -47,6 +47,11 @@ def generate_metadata_for_all_categories():
     for category in categories:
         print(f"Generating metadata for category: {category}")
         generate_photo_metadata(category)
+
+    categories_file = 'js/categories.json'
+
+    with open(categories_file, 'w') as f:
+        json.dump({'categories': categories}, f, indent=4)
 
 if __name__ == "__main__":
     generate_metadata_for_all_categories()

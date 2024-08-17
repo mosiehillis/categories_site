@@ -1,13 +1,17 @@
 // script.js
 document.addEventListener('DOMContentLoaded', () => {
-    fetchPhotos();
+    // Load photos for the default category or you can specify categories as needed
+    loadPhotos('default'); // Change 'default' to the actual category name if needed
 });
 
-async function fetchPhotos() {
+async function loadPhotos(categoryName) {
     try {
-        const response = await fetch('/photo-metadata.json');
+        const response = await fetch(`/js/${categoryName}.json`);
         const data = await response.json();
         const photoGrid = document.querySelector('.photo-grid');
+
+        // Clear previous photos
+        photoGrid.innerHTML = '';
 
         data.photos.forEach(photo => {
             const photoElement = document.createElement('div');
@@ -24,20 +28,33 @@ async function fetchPhotos() {
             photoGrid.appendChild(photoElement);
         });
     } catch (error) {
-        console.error('Error fetching photos:', error);
+        console.error('Error loading photos:', error);
     }
 }
 
-function setTileBackground(category) {
-    fetch(`js/${category.toLowerCase()}_photos.json`)
-        .then(response => response.json())
-        .then(photos => {
-            if (photos.length > 0) {
-                const tile = document.getElementById(`${category.toLowerCase()}-tile`);
-                tile.style.backgroundImage = `url('photos/${category}/${photos[0].file}')`;
-            }
-        })
-        .catch(error => console.error('Error loading category preview:', error));
-}
+document.addEventListener('DOMContentLoaded', () => {
+    updateCategoryTiles();
+});
 
-['Concerts', 'Weddings', 'Portraits'].forEach(setTileBackground);
+async function updateCategoryTiles() {
+    try {
+        // Fetch categories
+        const categoriesResponse = await fetch('/categories.json');
+        const categoriesData = await categoriesResponse.json();
+        const categories = categoriesData.categories;
+
+        // Iterate over each category
+        for (const category of categories) {
+            const response = await fetch(`/js/${category}.json`);
+            const data = await response.json();
+            const tile = document.getElementById(`${category.toLowerCase()}-tile`);
+
+            if (tile && data.photos.length > 0) {
+                const previewPhoto = data.photos[0]; // Get the first photo for the preview
+                tile.style.backgroundImage = `url(${previewPhoto.thumbnailUrl})`;
+            }
+        }
+    } catch (error) {
+        console.error('Error updating category tiles:', error);
+    }
+}
