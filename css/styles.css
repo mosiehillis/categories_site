@@ -30,6 +30,7 @@ header a:hover, footer a:hover {
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 20px;
+    margin: 0; /* Remove margins around category tiles */
 }
 
 .category-tile {
@@ -45,7 +46,6 @@ header a:hover, footer a:hover {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin: 10px;
     border-radius: 8px; /* Rounded corners for a softer look */
 }
 
@@ -59,27 +59,18 @@ header a:hover, footer a:hover {
 
 /* Photo Grid */
 .photo-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0; /* No gap between images */
+    padding: 0; /* No padding around the grid */
+    margin: 0; /* No margin around the grid */
+    box-sizing: border-box; /* Ensure padding and borders are included in the element’s total width and height */
 }
 
 .photo-grid img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 300px; /* Adjust height as needed */
-    margin: 5px;
-    border-radius: 8px; /* Rounded corners for images */
-    transition: opacity 0.3s ease;
-    cursor: pointer; /* Indicate that images are clickable */
-}
-
-.photo-grid img[loading="lazy"] {
-    opacity: 0;
-}
-
-.photo-grid img:not([loading="lazy"]) {
-    opacity: 1;
+    width: 100%; /* Full width of the grid cell */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove any default inline spacing */
+    border: 0; /* No border around images */
+    box-sizing: border-box; /* Ensure padding and borders are included in the element’s total width and height */
 }
