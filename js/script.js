@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadPhotos(categoryName) {
     try {
-        const response = await fetch(`/js/${categoryName}.json`);
+        const response = await fetch(`js/${categoryName}.json`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
