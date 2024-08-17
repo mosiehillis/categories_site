@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Load photos for the default category or you can specify categories as needed
     loadPhotos('default'); // Change 'default' to the actual category name if needed
+    updateCategoryTiles();
 });
 
 async function loadPhotos(categoryName) {
@@ -31,10 +32,6 @@ async function loadPhotos(categoryName) {
         console.error('Error loading photos:', error);
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    updateCategoryTiles();
-});
 
 async function updateCategoryTiles() {
     try {
