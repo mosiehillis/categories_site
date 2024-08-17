@@ -1,26 +1,32 @@
 [
     {
         "file": "mosie_relientk_031822_08.jpg",
-        "date": "2024-08-17T15:57:10.175480"
+        "date": "2024-08-17T15:57:10.175480",
+        "portrait": true
     },
     {
         "file": "Mosie-JudahandtheLion-102122-2.jpg",
-        "date": "2024-08-17T15:39:39.036821"
+        "date": "2024-08-17T15:39:39.036821",
+        "portrait": false
     },
     {
         "file": "Mosie-NCMF-090222-3.jpg",
-        "date": "2024-08-17T15:57:10.141480"
+        "date": "2024-08-17T15:57:10.141480",
+        "portrait": false
     },
     {
         "file": "mosie-MattNathanson-082722-1.jpg",
-        "date": "2024-08-17T15:57:10.132480"
+        "date": "2024-08-17T15:57:10.132480",
+        "portrait": true
     },
     {
         "file": "Mosie-GavinDeGraw-091322-1.jpg",
-        "date": "2024-08-17T15:57:10.129480"
+        "date": "2024-08-17T15:57:10.129480",
+        "portrait": true
     },
     {
         "file": "mosie-NewFoundGlory-072322-2.jpg",
-        "date": "2024-08-17T15:57:10.165480"
+        "date": "2024-08-17T15:57:10.165480",
+        "portrait": false
     }
 ]
