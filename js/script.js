@@ -7,30 +7,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadPhotos(categoryName) {
     try {
-        const response = await fetch(`js/${categoryName}.json`);
+        const response = await fetch(`/js/${categoryName}.json`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        const photoGrid = document.querySelector('.photo-grid');
 
-        // Clear previous photos
-        photoGrid.innerHTML = '';
+        console.log('Loaded data:', data); // Debugging line
 
-        data.photos.forEach(photo => {
-            const photoElement = document.createElement('div');
-            photoElement.classList.add(photo.is_portrait ? 'portrait' : 'landscape');
+        if (Array.isArray(data.photos)) {
+            const photoGrid = document.querySelector('.photo-grid');
 
-            const img = document.createElement('img');
-            img.src = photo.thumbnailUrl; // Use the URL of the thumbnail image
-            img.alt = photo.title; // Optional: Add alt text for accessibility
+            // Clear previous photos
+            photoGrid.innerHTML = '';
 
-            // Add lazy loading attribute
-            img.setAttribute('loading', 'lazy');
+            data.photos.forEach(photo => {
+                const photoElement = document.createElement('div');
+                photoElement.classList.add(photo.is_portrait ? 'portrait' : 'landscape');
 
-            photoElement.appendChild(img);
-            photoGrid.appendChild(photoElement);
-        });
+                const img = document.createElement('img');
+                img.src = photo.thumbnailUrl; // Use the URL of the thumbnail image
+                img.alt = photo.title; // Optional: Add alt text for accessibility
+
+                // Add lazy loading attribute
+                img.setAttribute('loading', 'lazy');
+
+                photoElement.appendChild(img);
+                photoGrid.appendChild(photoElement);
+            });
+        } else {
+            console.error('Expected data.photos to be an array, but got:', data.photos);
+        }
     } catch (error) {
         console.error('Error loading photos:', error);
     }
