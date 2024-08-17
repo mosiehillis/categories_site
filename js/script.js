@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadPhotos(categoryName) {
     try {
         const response = await fetch(`/js/${categoryName}.json`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const data = await response.json();
         const photoGrid = document.querySelector('.photo-grid');
 
@@ -37,13 +40,20 @@ async function updateCategoryTiles() {
     try {
         // Fetch categories
         const categoriesResponse = await fetch('/categories.json');
+        if (!categoriesResponse.ok) {
+            throw new Error(`HTTP error! Status: ${categoriesResponse.status}`);
+        }
         const categoriesData = await categoriesResponse.json();
         const categories = categoriesData.categories;
 
         // Iterate over each category
         for (const category of categories) {
-            const response = await fetch(`/js/${category}.json`);
-            const data = await response.json();
+            const metadataResponse = await fetch(`/js/${category}.json`);
+            if (!metadataResponse.ok) {
+                console.error(`Error fetching metadata for category ${category}: ${metadataResponse.statusText}`);
+                continue; // Skip this category if there's an error
+            }
+            const data = await metadataResponse.json();
             const tile = document.getElementById(`${category.toLowerCase()}-tile`);
 
             if (tile && data.photos.length > 0) {
