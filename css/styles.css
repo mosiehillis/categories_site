@@ -40,7 +40,8 @@ main {
 .category-tile {
     background-size: cover;
     background-position: center;
-    height: 200px;
+    height: 300px;  /* Increased height for portrait orientation */
+    width: 200px;   /* Adjusted width to maintain portrait ratio */
     position: relative;
     color: white;
     font-size: 1.5em;

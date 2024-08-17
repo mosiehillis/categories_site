@@ -17,9 +17,13 @@ function setTileBackground(category) {
     fetch(`js/${category.toLowerCase()}_photos.json`)
         .then(response => response.json())
         .then(photos => {
-            if (photos.length > 0) {
+            // Filter for portrait-oriented photos
+            const portraitPhotos = photos.filter(photo => photo.portrait);
+            
+            if (portraitPhotos.length > 0) {
+                const lastPortraitPhoto = portraitPhotos[portraitPhotos.length - 1];
                 const tile = document.getElementById(`${category.toLowerCase()}-tile`);
-                tile.style.backgroundImage = `url('photos/${category}/${photos[0].file}')`;
+                tile.style.backgroundImage = `url('photos/${category}/${lastPortraitPhoto.file}')`;
             }
         })
         .catch(error => console.error('Error loading category preview:', error));

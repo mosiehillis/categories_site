@@ -1,6 +1,12 @@
 import os
 import json
 from datetime import datetime
+from PIL import Image
+
+def is_portrait(image_path):
+    with Image.open(image_path) as img:
+        width, height = img.size
+    return height > width
 
 def generate_photo_metadata(category):
     folder_path = os.path.join('photos', category)
@@ -12,7 +18,8 @@ def generate_photo_metadata(category):
             creation_time = os.path.getctime(filepath)
             photos.append({
                 'file': filename,
-                'date': datetime.fromtimestamp(creation_time).isoformat()
+                'date': datetime.fromtimestamp(creation_time).isoformat(),
+                'portrait': is_portrait(filepath)
             })
 
     output_file = os.path.join('js', f'{category.lower()}_photos.json')
