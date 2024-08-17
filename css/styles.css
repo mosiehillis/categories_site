@@ -1,6 +1,6 @@
 /* Global Styles */
 body {
-    font-family: 'Roboto', sans-serif; 
+    font-family: 'Roboto', sans-serif; /* Updated font */
     color: #333; /* A nice, legible font color */
     background-color: #f0f8f8; /* A soft pastel background color */
     margin: 0;
@@ -16,7 +16,7 @@ header, footer {
 }
 
 header a, footer a {
-    color: #0056b3; /* A more legible color for links */
+    color: #000; /* Black color for links */
     text-decoration: none;
 }
 
