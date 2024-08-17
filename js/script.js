@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadPhotos(categoryName) {
     try {
-        const response = await fetch(`/js/${categoryName}.json`);
+        const response = await fetch(`js/${categoryName}.json`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -48,7 +48,7 @@ async function updateCategoryTiles() {
 
         // Iterate over each category
         for (const category of categories) {
-            const metadataResponse = await fetch(`/js/${category}.json`);
+            const metadataResponse = await fetch(`js/${category}.json`);
             if (!metadataResponse.ok) {
                 console.error(`Error fetching metadata for category ${category}: ${metadataResponse.statusText}`);
                 continue; // Skip this category if there's an error
