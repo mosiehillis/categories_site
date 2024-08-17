@@ -39,7 +39,7 @@ async function loadPhotos(categoryName) {
 async function updateCategoryTiles() {
     try {
         // Fetch categories
-        const categoriesResponse = await fetch('/categories.json');
+        const categoriesResponse = await fetch('js/categories.json');
         if (!categoriesResponse.ok) {
             throw new Error(`HTTP error! Status: ${categoriesResponse.status}`);
         }
