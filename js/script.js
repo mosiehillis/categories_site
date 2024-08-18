@@ -49,6 +49,7 @@ function setupLazyLoading() {
                 const img = entry.target;
                 img.src = img.dataset.src;
                 img.classList.remove('lazy');
+                img.classList.add('loaded');
                 observer.unobserve(img);
             }
         });
@@ -95,39 +96,17 @@ async function loadPhotos(category) {
 
     data.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    let currentRow = document.createElement('div');
-    currentRow.className = 'photo-row';
-    let rowHeight = 0;
-    const targetRowHeight = 200;
-
     data.forEach(photo => {
         const img = document.createElement('img');
-        img.dataset.src = `photos/${category}/${photo.file}`; // Use data-src for lazy loading
+        img.dataset.src = `photos/${category}/${photo.file}`;
         img.alt = photo.file;
-        img.className = 'lazy'; // Add a class for lazy-loaded images
+        img.className = 'lazy';
+        
+        // Set a data attribute for orientation
+        img.dataset.orientation = photo.portrait ? 'portrait' : 'landscape';
 
-        if (photo.portrait) {
-            img.style.width = `${targetRowHeight * 2 / 3}px`;
-            img.style.height = `${targetRowHeight}px`;
-        } else {
-            img.style.width = `${targetRowHeight * 3 / 2}px`;
-            img.style.height = `${targetRowHeight}px`;
-        }
-
-        if (rowHeight + parseInt(img.style.height) > targetRowHeight) {
-            photoWall.appendChild(currentRow);
-            currentRow = document.createElement('div');
-            currentRow.className = 'photo-row';
-            rowHeight = 0;
-        }
-
-        currentRow.appendChild(img);
-        rowHeight += parseInt(img.style.height);
+        photoWall.appendChild(img);
     });
-
-    if (currentRow.children.length > 0) {
-        photoWall.appendChild(currentRow);
-    }
 
     setupLazyLoading();
     setupModal();
