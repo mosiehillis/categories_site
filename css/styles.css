@@ -137,15 +137,33 @@ footer {
     background-color: var(--secondary-color);
     padding: 1rem;
     text-align: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between icons */
 }
 
 footer a {
     margin: 0 1rem;
 }
 
-footer img {
-    width: 24px;
-    height: 24px;
+.footer-icon {
+    display: inline-block;
+    width: 40px; /* Set consistent width */
+    height: 40px; /* Set consistent height */
+    overflow: hidden; /* Ensure any extra part of the icon is hidden */
+}
+
+.footer-icon img {
+    width: 100%; /* Scale icon to fit container */
+    height: 100%; /* Scale icon to fit container */
+    object-fit: contain; /* Ensure the icon is properly contained within the container */
+    vertical-align: middle; /* Aligns icon properly with text */
+    border: 0; /* Remove any border */
+}
+
+.footer-icon:hover img {
+    opacity: 0.8; /* Slightly dim the icon on hover */
 }
 
 @media (max-width: 768px) {
