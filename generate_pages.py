@@ -16,7 +16,7 @@ def generate_html_page(categories, recent_photos, page_name):
     with open('templates/index_template.html', 'r') as f:
         template = f.read()
 
-    category_buttons = '\n'.join(f'<a href="{category}.html" class="category-button">{category}</a>' for category in categories)
+    category_buttons = '\n\t\t\t'.join(f'<a href="{category}.html" class="category-button">{category}</a>' for category in categories)
     
     photos_html = generate_photos_html(recent_photos)
 
@@ -30,7 +30,7 @@ def generate_photos_html(photos):
     photos_html = ''
     for i, photo in enumerate(photos):
         portrait_class = 'portrait' if photo['portrait'] else 'landscape'
-        photos_html += f'<img src="photos/{photo["category"]}/{photo["file"]}" loading="lazy" class="{portrait_class}" alt="Photo"</img>\n'
+        photos_html += f'<img src="photos/{photo["category"]}/{photo["file"]}" loading="lazy" class="{portrait_class}" alt="Photo">\n\t\t\t'
     return photos_html
 
 def main():
