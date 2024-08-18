@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portraits - Mosie Hillis Photography</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Favicon links -->
+    <link rel="icon" href="favicons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" href="favicons/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+    <link rel="icon" href="favicons/android-chrome-192x192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="favicons/android-chrome-512x512.png" sizes="512x512" type="image/png">
+    <link rel="manifest" href="favicons/site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="hamburger-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul class="nav-menu">
+                <!-- Navigation items will be added dynamically by JavaScript -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Portraits</h1>
+        <div class="photo-wall">
+            <!-- Photos will be dynamically inserted here -->
+        </div>
+    </main>
+
+    <footer>
+        <a href="https://instagram.com/mosiehillisphotography" class="footer-icon" aria-label="Instagram">
+            <img src="icons/instagram.svg" alt="Instagram">
+        </a>
+        <a href="mailto:mosiehillisphotography@gmail.com" class="footer-icon" aria-label="Email">
+            <img src="icons/email.png" alt="Email">
+        </a>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPhotos('Portraits');
+        });
+    </script>
+</body>
+</html>
