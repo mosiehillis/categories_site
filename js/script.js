@@ -1,74 +1,152 @@
-// script.js
 document.addEventListener('DOMContentLoaded', () => {
-    // Load photos for the default category or you can specify categories as needed
-    // loadPhotos('default'); // Change 'default' to the actual category name if needed
-    updateCategoryTiles();
+    const hamburger = document.querySelector('.hamburger-menu');
+    const navMenu = document.querySelector('.nav-menu');
+
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+
+    loadCategories();
+    setupLazyLoading();
+    setupModal();
+    setupNavigation();
 });
 
-async function loadPhotos(categoryName) {
-    try {
-        const response = await fetch(`js/${categoryName}.json`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const photos = await response.json();
+async function loadCategories() {
+    const response = await fetch('js/categories.json');
+    const data = await response.json();
+    const categoryGrid = document.querySelector('.category-grid');
 
-        console.log('Loaded data:', photos); // Debugging line
-
-        if (Array.isArray(photos)) {
-            const photoGrid = document.querySelector('.photo-grid');
-
-            // Clear previous photos
-            photoGrid.innerHTML = '';
-
-            photos.forEach(photo => {
-                const photoElement = document.createElement('div');
-                photoElement.classList.add(photo.is_portrait ? 'portrait' : 'landscape');
-
-                const img = document.createElement('img');
-                img.src = photo.thumbnailUrl; // Use the URL of the thumbnail image
-                img.alt = photo.title; // Optional: Add alt text for accessibility
-
-                // Add lazy loading attribute
-                img.setAttribute('loading', 'lazy');
-
-                photoElement.appendChild(img);
-                photoGrid.appendChild(photoElement);
-            });
-        } else {
-            console.error('Expected data.photos to be an array, but got:', photos);
-        }
-    } catch (error) {
-        console.error('Error loading photos:', error);
-    }
+    data.categories.forEach(category => {
+        const preview = document.createElement('div');
+        preview.className = 'category-preview';
+        preview.innerHTML = `
+            <img src="photos/${category}/thumbnails/${getFirstImage(category)}" alt="${category}">
+            <h2>${category}</h2>
+        `;
+        preview.addEventListener('click', () => {
+            window.location.href = `${category.toLowerCase()}.html`;
+        });
+        categoryGrid.appendChild(preview);
+    });
 }
 
-async function updateCategoryTiles() {
-    try {
-        // Fetch categories
-        const categoriesResponse = await fetch('js/categories.json');
-        if (!categoriesResponse.ok) {
-            throw new Error(`HTTP error! Status: ${categoriesResponse.status}`);
-        }
-        const categoriesData = await categoriesResponse.json();
-        const categories = categoriesData.categories;
+async function getFirstImage(category) {
+    const response = await fetch(`js/${category}.json`);
+    const data = await response.json();
+    return data[0].file;
+}
 
-        // Iterate over each category
-        for (const category of categories) {
-            const metadataResponse = await fetch(`js/${category}.json`);
-            if (!metadataResponse.ok) {
-                console.error(`Error fetching metadata for category ${category}: ${metadataResponse.statusText}`);
-                continue; // Skip this category if there's an error
-            }
-            const data = await metadataResponse.json();
-            const tile = document.getElementById(`${category.toLowerCase()}-tile`);
+function setupLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
 
-            if (tile && data.photos.length > 0) {
-                const previewPhoto = data.photos[0]; // Get the first photo for the preview
-                tile.style.backgroundImage = `url(${previewPhoto.thumbnailUrl})`;
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                observer.unobserve(img);
             }
+        });
+    }, options);
+
+    images.forEach(img => observer.observe(img));
+}
+
+function setupModal() {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    `;
+    document.body.appendChild(modal);
+
+    const images = document.querySelectorAll('.photo-wall img');
+    const modalImg = document.getElementById('modalImg');
+    const close = document.querySelector('.close');
+
+    images.forEach(img => {
+        img.addEventListener('click', () => {
+            modal.style.display = 'block';
+            modalImg.src = img.src;
+        });
+    });
+
+    close.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
         }
-    } catch (error) {
-        console.error('Error updating category tiles:', error);
+    });
+}
+
+async function loadPhotos(category) {
+    const response = await fetch(`js/${category}.json`);
+    const data = await response.json();
+    const photoWall = document.querySelector('.photo-wall');
+
+    data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    let currentRow = document.createElement('div');
+    currentRow.className = 'photo-row';
+    let rowHeight = 0;
+    const targetRowHeight = 200;
+
+    data.forEach(photo => {
+        const img = document.createElement('img');
+        img.dataset.src = `photos/${category}/${photo.file}`;
+        img.alt = photo.file;
+
+        if (photo.portrait) {
+            img.style.width = `${targetRowHeight * 2 / 3}px`;
+            img.style.height = `${targetRowHeight}px`;
+        } else {
+            img.style.width = `${targetRowHeight * 3 / 2}px`;
+            img.style.height = `${targetRowHeight}px`;
+        }
+
+        if (rowHeight + parseInt(img.style.height) > targetRowHeight) {
+            photoWall.appendChild(currentRow);
+            currentRow = document.createElement('div');
+            currentRow.className = 'photo-row';
+            rowHeight = 0;
+        }
+
+        currentRow.appendChild(img);
+        rowHeight += parseInt(img.style.height);
+    });
+
+    if (currentRow.children.length > 0) {
+        photoWall.appendChild(currentRow);
     }
+
+    setupLazyLoading();
+}
+
+async function setupNavigation() {
+    const response = await fetch('js/categories.json');
+    const data = await response.json();
+    const navMenu = document.querySelector('.nav-menu');
+
+    // Add home link
+    const homeLink = document.createElement('li');
+    homeLink.innerHTML = '<a href="index.html">Home</a>';
+    navMenu.appendChild(homeLink);
+
+    // Add category links
+    data.categories.forEach(category => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="${category.toLowerCase()}.html">${category}</a>`;
+        navMenu.appendChild(li);
+    });
 }

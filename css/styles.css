@@ -1,111 +1,165 @@
-/* Global Styles */
+:root {
+    --primary-color: #f8e5e5;
+    --secondary-color: #f0b5b5;
+    --text-color: #333;
+    --background-color: #fff;
+}
+
 body {
-    font-family: 'Roboto', sans-serif; /* Updated font */
-    color: #333; /* A nice, legible font color */
-    background-color: #f0f8f8; /* A soft pastel background color */
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
     margin: 0;
     padding: 0;
 }
 
-/* Header */
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+}
+
 header {
-    background-color: #f5d4e0; /* Pastel pink for header */
-    color: #333; /* Ensure text is readable */
-    padding: 10px 20px;
-    text-align: center;
+    background-color: var(--primary-color);
+    padding: 1rem;
 }
 
-header a {
-    color: #000; /* Black color for links */
-    text-decoration: none;
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
 }
 
-header a:hover {
-    text-decoration: underline;
+.hamburger-menu div {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color);
+    margin: 5px 0;
 }
 
-/* Footer */
-footer {
-    background-color: #f5d4e0; /* Pastel pink for footer */
-    color: #333; /* Ensure text is readable */
-    padding: 10px 20px;
-    text-align: center;
+.nav-menu {
+    list-style-type: none;
+    padding: 0;
     display: flex;
     justify-content: center;
-    gap: 20px; /* Space between icons */
 }
 
-.footer-icon {
-    display: inline-block;
-    width: 40px; /* Set consistent width */
-    height: 40px; /* Set consistent height */
-    overflow: hidden; /* Ensure any extra part of the icon is hidden */
+.nav-menu li {
+    margin: 0 1rem;
 }
 
-.footer-icon img {
-    width: 100%; /* Scale icon to fit container */
-    height: 100%; /* Scale icon to fit container */
-    object-fit: contain; /* Ensure the icon is properly contained within the container */
-    vertical-align: middle; /* Aligns icon properly with text */
-    border: 0; /* Remove any border */
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: bold;
 }
 
-.footer-icon:hover img {
-    opacity: 0.8; /* Slightly dim the icon on hover */
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
-
-/* Category Tiles */
 .category-grid {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 20px;
-    margin: 0; /* Remove margins around category tiles */
-}
-
-.category-tile {
-    background-size: cover;
-    background-position: center;
-    height: 300px; /* Adjust height as needed */
-    width: 200px; /* Adjust width to maintain portrait ratio */
-    position: relative;
-    color: white;
-    font-size: 1.5em;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: 8px; /* Rounded corners for a softer look */
-}
-
-.category-tile span {
-    position: relative;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.5); /* Optional: adds overlay for better text visibility */
-    padding: 10px;
-    border-radius: 5px;
-}
-
-/* Photo Grid */
-.photo-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0; /* No gap between images */
-    padding: 0; /* No padding around the grid */
-    margin: 0; /* No margin around the grid */
-    box-sizing: border-box; /* Ensure padding and borders are included in the element’s total width and height */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
 }
 
-/* Portrait Images */
-.photo-grid .portrait img {
-    height: 300px; /* Height for portrait images */
-    object-fit: cover; /* Cover the grid cell while maintaining aspect ratio */
+.category-preview {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
-/* Landscape Images */
-.photo-grid .landscape img {
-    height: 150px; /* Height for landscape images */
-    object-fit: cover; /* Cover the grid cell while maintaining aspect ratio */
+.category-preview:hover {
+    transform: scale(1.05);
+}
+
+.category-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-preview h2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    padding: 1rem;
+    text-align: center;
+}
+
+.photo-wall {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.photo-wall img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+footer {
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    text-align: center;
+}
+
+footer a {
+    margin: 0 1rem;
+}
+
+footer img {
+    width: 24px;
+    height: 24px;
+}
+
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: block;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
 }

@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mosie Hillis Photography</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
     <!-- Favicon links -->
     <link rel="icon" href="favicons/favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicons/favicon-32x32.png" sizes="32x32">
@@ -19,21 +18,25 @@
 </head>
 <body>
     <header>
-        <h1>Mosie Hillis Photography</h1>
+        <nav>
+            <div class="hamburger-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul class="nav-menu">
+                <!-- Navigation items will be added dynamically by JavaScript -->
+            </ul>
+        </nav>
     </header>
+
     <main>
+        <h1>Mosie Hillis Photography</h1>
         <div class="category-grid">
-            <a href="concerts.html" class="category-tile" id="concerts-tile">
-                <span>Concerts</span>
-            </a>
-            <a href="weddings.html" class="category-tile" id="weddings-tile">
-                <span>Weddings</span>
-            </a>
-            <a href="portraits.html" class="category-tile" id="portraits-tile">
-                <span>Portraits</span>
-            </a>
+            <!-- Category previews will be dynamically inserted here -->
         </div>
     </main>
+
     <footer>
         <a href="https://instagram.com/mosiehillisphotography" class="footer-icon" aria-label="Instagram">
             <img src="icons/instagram.svg" alt="Instagram">
@@ -42,5 +45,7 @@
             <img src="icons/email.png" alt="Email">
         </a>
     </footer>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
