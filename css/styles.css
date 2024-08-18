@@ -164,30 +164,34 @@ footer {
     background-color: var(--secondary-color);
     padding: 1rem;
     text-align: center;
-    text-align: center;
     display: flex;
     justify-content: center;
-    gap: 20px; /* Space between icons */
-}
-
-footer a {
-    margin: 0 1rem;
+    align-items: center;
+    gap: 20px;
 }
 
 .footer-icon {
-    display: inline-block;
-    width: 40px; /* Set consistent width */
-    height: 40px; /* Set consistent height */
-    overflow: hidden; /* Ensure any extra part of the icon is hidden */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;  /* Set a consistent, small size */
+    height: 30px;
+    background-color: var(--primary-color);
+    border-radius: 50%;  /* Makes the background circular */
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.footer-icon:hover {
+    background-color: var(--text-color);
 }
 
 .footer-icon img {
-    width: 100%; /* Scale icon to fit container */
-    height: 100%; /* Scale icon to fit container */
-    object-fit: contain; /* Ensure the icon is properly contained within the container */
-    vertical-align: middle; /* Aligns icon properly with text */
-    border: 0; /* Remove any border */
+    width: 20px;  /* Make the actual icon smaller than the container */
+    height: 20px;
+    object-fit: contain;
 }
+
 
 .footer-icon:hover img {
     opacity: 0.8; /* Slightly dim the icon on hover */
