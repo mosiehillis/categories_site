@@ -1,37 +1,65 @@
-import os
 import json
-from jinja2 import Environment, FileSystemLoader
+from datetime import datetime
 
-def get_categories():
-    photos_root = 'photos'
-    return [name for name in os.listdir(photos_root) if os.path.isdir(os.path.join(photos_root, name))]
+def load_categories():
+    with open('js/categories.json') as f:
+        return json.load(f)['categories']
 
-def generate_category_page(category):
-    template = env.get_template('category_template.html')
-    output = template.render(category=category)
+def load_photos(category):
+    with open(f'js/{category}.json') as f:
+        return json.load(f)
+
+def generate_index_page(categories, recent_photos):
+    with open('templates/index_template.html', 'r') as f:
+        template = f.read()
+
+    category_buttons = ''.join(f'<a href="{category}.html" class="category-button">{category}</a>' for category in categories)
     
-    with open(f'{category.lower()}.html', 'w') as f:
-        f.write(output)
+    photos_html = generate_photos_html(recent_photos)
 
-def update_index_page(categories):
-    template = env.get_template('index_template.html')
-    output = template.render(categories=categories)
-    
+    final_html = template.replace('{{ category_buttons }}', category_buttons)
+    final_html = final_html.replace('{{ recent_photos }}', photos_html)
+
     with open('index.html', 'w') as f:
-        f.write(output)
+        f.write(final_html)
 
-if __name__ == "__main__":
-    # Set up Jinja2 environment
-    env = Environment(loader=FileSystemLoader('templates'))
-
-    # Get categories
-    categories = get_categories()
-
-    # Generate category pages
-    for category in categories:
-        generate_category_page(category)
+def generate_category_page(category, photos):
+    with open('templates/category_template.html', 'r') as f:
+        template = f.read()
     
-    # Update index page
-    update_index_page(categories)
+    photos_html = generate_photos_html(photos)
 
-    print("Page generation complete.")
+    final_html = template.replace('{{ category_name }}', category)
+    final_html = final_html.replace('{{ category_photos }}', photos_html)
+
+    with open(f'{category}.html', 'w') as f:
+        f.write(final_html)
+
+def generate_photos_html(photos):
+    photos_html = ''
+    for i, photo in enumerate(photos):
+        portrait_class = 'portrait' if photo['portrait'] else 'landscape'
+        photos_html += f'<img src="photos/{photo["category"]}/{photo["file"]}" loading="lazy" class="{portrait_class}" alt="Photo" />\n'
+    return photos_html
+
+def main():
+    categories = load_categories()
+    all_photos = []
+
+    for category in categories:
+        photos = load_photos(category)
+        for photo in photos:
+            photo['category'] = category
+            all_photos.append(photo)
+    
+    # Sort photos by date descending
+    all_photos.sort(key=lambda x: datetime.fromisoformat(x['date']), reverse=True)
+
+    generate_index_page(categories, all_photos)
+
+    for category in categories:
+        photos = load_photos(category)
+        generate_category_page(category, photos)
+
+if __name__ == '__main__':
+    main()
