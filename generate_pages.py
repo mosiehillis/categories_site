@@ -41,7 +41,6 @@ def generate_category_page(category, photos):
 def generate_photos_html(photos):
     photos_html = ''
     for i, photo in enumerate(photos):
-        print(photo)
         portrait_class = 'portrait' if photo['portrait'] else 'landscape'
         photos_html += f'<img src="photos/{photo["category"]}/{photo["file"]}" loading="lazy" class="{portrait_class}" alt="Photo" />\n'
     return photos_html
