@@ -44,7 +44,7 @@ def main():
 
     for category in categories:
         photos = load_photos(category)
-        generate_html_page(category, photos, category)
+        generate_html_page(categories, photos, category)
 
 if __name__ == '__main__':
     main()
