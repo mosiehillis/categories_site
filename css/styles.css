@@ -13,10 +13,6 @@ header {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.category-buttons {
-    margin: 20px;
-}
-
 .category-button {
     text-decoration: none;
     background-color: #FFC0CB; /* Light pink */
@@ -24,6 +20,16 @@ header {
     padding: 10px 20px;
     border-radius: 5px;
     margin: 5px;
+    border: 2px solid #ff88b0; /* Brighter pink border */
+    box-shadow: 0px 4px 8px rgba(255, 105, 180, 0.4); /* Soft shadow */
+    transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Transition for effect */
+}
+
+.category-button:hover {
+    background-color: #ff88b0; /* Darker pink on hover */
+    color: #fff; /* Keep text white */
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0px 6px 12px rgba(255, 105, 180, 0.6); /* Enhanced shadow on hover */
 }
 
 .main {
