@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadCategories();
-    setupLazyLoading();
-    setupModal();
     setupNavigation();
 });
 
@@ -38,25 +36,25 @@ async function getFirstImage(category) {
 }
 
 function setupLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
+    const lazyImages = document.querySelectorAll('img.lazy');
     const options = {
         root: null,
         rootMargin: '0px',
         threshold: 0.1
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
                 img.src = img.dataset.src;
-                img.removeAttribute('data-src');
+                img.classList.remove('lazy');
                 observer.unobserve(img);
             }
         });
     }, options);
 
-    images.forEach(img => observer.observe(img));
+    lazyImages.forEach(img => imageObserver.observe(img));
 }
 
 function setupModal() {
@@ -68,15 +66,15 @@ function setupModal() {
     `;
     document.body.appendChild(modal);
 
-    const images = document.querySelectorAll('.photo-wall img');
     const modalImg = document.getElementById('modalImg');
     const close = document.querySelector('.close');
 
-    images.forEach(img => {
-        img.addEventListener('click', () => {
+    // Use event delegation on the photo wall
+    document.querySelector('.photo-wall').addEventListener('click', (e) => {
+        if (e.target.tagName === 'IMG') {
             modal.style.display = 'block';
-            modalImg.src = img.src;
-        });
+            modalImg.src = e.target.src || e.target.dataset.src; // Use src if loaded, otherwise use data-src
+        }
     });
 
     close.addEventListener('click', () => {
@@ -104,8 +102,9 @@ async function loadPhotos(category) {
 
     data.forEach(photo => {
         const img = document.createElement('img');
-        img.dataset.src = `photos/${category}/${photo.file}`;
+        img.dataset.src = `photos/${category}/${photo.file}`; // Use data-src for lazy loading
         img.alt = photo.file;
+        img.className = 'lazy'; // Add a class for lazy-loaded images
 
         if (photo.portrait) {
             img.style.width = `${targetRowHeight * 2 / 3}px`;
@@ -131,6 +130,7 @@ async function loadPhotos(category) {
     }
 
     setupLazyLoading();
+    setupModal();
 }
 
 async function setupNavigation() {
