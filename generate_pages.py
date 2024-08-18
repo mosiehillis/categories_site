@@ -7,8 +7,11 @@ def load_categories():
 
 def load_photos(category):
     with open(f'js/{category}.json') as f:
-        return json.load(f)
-
+        photos = json.load(f)
+    for photo in photos:
+        photo['category'] = category
+    return photos
+    
 def generate_index_page(categories, recent_photos):
     with open('templates/index_template.html', 'r') as f:
         template = f.read()
@@ -38,20 +41,15 @@ def generate_category_page(category, photos):
 def generate_photos_html(photos):
     photos_html = ''
     for i, photo in enumerate(photos):
+        print(photo)
         portrait_class = 'portrait' if photo['portrait'] else 'landscape'
         photos_html += f'<img src="photos/{photo["category"]}/{photo["file"]}" loading="lazy" class="{portrait_class}" alt="Photo" />\n'
     return photos_html
 
 def main():
     categories = load_categories()
-    all_photos = []
+    all_photos = [elem for subl in [load_photos(category) for category in categories] for elem in subl]
 
-    for category in categories:
-        photos = load_photos(category)
-        for photo in photos:
-            photo['category'] = category
-            all_photos.append(photo)
-    
     # Sort photos by date descending
     all_photos.sort(key=lambda x: datetime.fromisoformat(x['date']), reverse=True)
 
